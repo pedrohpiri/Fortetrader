@@ -378,6 +378,122 @@ section{position:relative;z-index:1;}
 .wpp-icon{width:26px;height:26px;}
 .cta-note{margin-top:22px;font-size:.8rem;color:var(--muted);letter-spacing:1px;}
 
+/* ── VÍDEO ── */
+.video-section{padding:100px 5%;background:linear-gradient(180deg,var(--dark2) 0%,var(--dark) 100%);}
+.video-inner{max-width:900px;margin:0 auto;}
+.video-header{margin-bottom:48px;}
+.video-subtitle{
+  text-align:center;color:var(--muted);font-size:1rem;
+  line-height:1.7;max-width:580px;margin:12px auto 0;
+}
+
+.video-wrapper{
+  position:relative;width:100%;
+  background:#000;
+  border:1px solid rgba(0,255,136,.2);
+  overflow:hidden;
+  box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 0 1px rgba(0,255,136,.08);
+}
+.video-wrapper::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--green),transparent);
+  z-index:3;
+}
+
+#mainVideo{
+  width:100%;display:block;
+  aspect-ratio:16/9;object-fit:cover;cursor:pointer;
+}
+
+/* Play overlay */
+.play-overlay{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;
+  background:linear-gradient(135deg,rgba(2,10,4,.85),rgba(7,16,8,.7));
+  z-index:2;cursor:pointer;
+  transition:opacity .4s;
+}
+.play-overlay.hidden{opacity:0;pointer-events:none;}
+
+.play-ring{
+  position:absolute;
+  width:100px;height:100px;border-radius:50%;
+  border:1px solid rgba(0,255,136,.3);
+  animation:ring-expand 2s ease-out infinite;
+}
+@keyframes ring-expand{
+  0%{transform:scale(1);opacity:.6;}
+  100%{transform:scale(1.8);opacity:0;}
+}
+
+.play-btn{
+  width:76px;height:76px;border-radius:50%;
+  background:var(--green);border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  color:#000;position:relative;z-index:1;
+  transition:transform .3s cubic-bezier(.175,.885,.32,1.275),box-shadow .3s;
+  box-shadow:0 0 30px rgba(0,255,136,.4);
+}
+.play-btn:hover{transform:scale(1.12);box-shadow:0 0 50px rgba(0,255,136,.7);}
+.play-btn svg{margin-left:4px;}
+
+.play-label{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:.85rem;letter-spacing:3px;color:var(--green);
+  text-transform:uppercase;position:relative;z-index:1;
+}
+
+/* Controles customizados */
+.video-controls{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:10px 16px 14px;
+  background:linear-gradient(to top,rgba(0,0,0,.9),transparent);
+  z-index:2;opacity:0;
+  transition:opacity .3s;
+}
+.video-wrapper:hover .video-controls,
+.video-wrapper.playing .video-controls{opacity:1;}
+
+.progress-bar{
+  width:100%;height:4px;background:rgba(255,255,255,.15);
+  border-radius:2px;margin-bottom:10px;cursor:pointer;
+  position:relative;
+}
+.progress-fill{height:100%;background:var(--green);border-radius:2px;width:0%;transition:width .1s;}
+.progress-thumb{
+  position:absolute;top:50%;right:auto;left:0%;
+  transform:translate(-50%,-50%);
+  width:12px;height:12px;border-radius:50%;background:var(--green);
+  box-shadow:0 0 8px rgba(0,255,136,.6);opacity:0;transition:opacity .2s;
+}
+.progress-bar:hover .progress-thumb{opacity:1;}
+
+.controls-row{display:flex;align-items:center;gap:12px;}
+.ctrl-btn{
+  background:none;border:none;color:var(--text);cursor:pointer;
+  padding:4px;opacity:.8;transition:opacity .2s,transform .2s;display:flex;
+}
+.ctrl-btn:hover{opacity:1;transform:scale(1.1);}
+.volume-wrap{display:flex;align-items:center;gap:8px;}
+.volume-slider{
+  -webkit-appearance:none;width:70px;height:3px;
+  background:rgba(255,255,255,.2);border-radius:2px;cursor:pointer;outline:none;
+}
+.volume-slider::-webkit-slider-thumb{
+  -webkit-appearance:none;width:12px;height:12px;border-radius:50%;
+  background:var(--green);cursor:pointer;
+}
+.time-display{font-family:'Barlow Condensed',sans-serif;font-size:.8rem;color:var(--muted);letter-spacing:1px;margin-left:auto;}
+.fullscreen-btn{margin-left:4px;}
+
+/* CTA vídeo */
+.video-cta{
+  text-align:center;margin-top:40px;
+  display:flex;flex-direction:column;align-items:center;gap:20px;
+}
+.video-cta p{color:var(--muted);font-size:1rem;}
+.video-cta p strong{color:var(--text);}
+
 /* ── FOOTER ── */
 footer{background:var(--dark2);border-top:1px solid rgba(0,255,136,.1);padding:40px 5%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
 .footer-logo{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:3px;color:var(--green);}
@@ -491,10 +607,7 @@ footer p{font-size:.8rem;color:var(--muted);}
       </div>
     </div>
 
-<div class="hero-card" id="heroCard">
-      <video autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.15;z-index:-1;">
-        <source src="public/videos/WhatsApp Video 2026-03-20 at 12.07.48.mp4" type="video/mp4">
-      </video>
+    <div class="hero-card" id="heroCard">
       <div class="card-header"><div class="live-dot"></div>Performance da Turma</div>
       <div class="stats-grid">
         <div class="stat-item"><div class="stat-value" data-count="2851" data-suffix="+">0</div><div class="stat-label">Seguidores</div></div>
@@ -526,12 +639,7 @@ footer p{font-size:.8rem;color:var(--muted);}
 <section class="about" id="sobre">
   <div class="about-inner">
     <div class="about-visual anim" style="position:relative;">
-<div class="about-img-frame">
-        <video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;">
-          <source src="public/videos/WhatsApp Video 2026-03-20 at 12.07.48.mp4" type="video/mp4">
-        </video>
-        <div class="about-placeholder" style="position:absolute;z-index:1;">G.A.</div>
-      </div>
+      <div class="about-img-frame"><div class="about-placeholder">G.A.</div></div>
       <div class="about-badge"><div class="big">+10</div><div class="small">anos de mercado</div></div>
     </div>
     <div class="about-text anim" style="animation-delay:.15s">
@@ -546,6 +654,70 @@ footer p{font-size:.8rem;color:var(--muted);}
         <li>Suporte e acompanhamento contínuo dos alunos</li>
         <li>Metodologia 100% prática, sem promessas fáceis</li>
       </ul>
+    </div>
+  </div>
+</section>
+
+<!-- VÍDEO DE APRESENTAÇÃO -->
+<section class="video-section" id="apresentacao">
+  <div class="video-inner">
+    <div class="video-header anim">
+      <div class="section-label" style="justify-content:center">Veja como funciona</div>
+      <h2 class="section-title" style="text-align:center">O CURSO EM <span class="accent">DETALHES</span></h2>
+      <p class="video-subtitle">Assista à apresentação completa do Guilherme e entenda tudo sobre a metodologia da Forte Trader antes de tomar sua decisão.</p>
+    </div>
+
+    <div class="video-wrapper anim" style="animation-delay:.2s">
+      <!-- Substitua /videos/apresentacao.mp4 pelo caminho real do seu arquivo na Vercel -->
+      <video
+        id="mainVideo"
+        src="/videos/apresentacao.mp4"
+        poster=""
+        preload="metadata"
+        playsinline
+      ></video>
+
+      <!-- Play button overlay -->
+      <div class="play-overlay" id="playOverlay">
+        <div class="play-ring"></div>
+        <button class="play-btn" id="playBtn" aria-label="Reproduzir vídeo">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        <div class="play-label">Assistir apresentação</div>
+      </div>
+
+      <!-- Controles customizados -->
+      <div class="video-controls" id="videoControls">
+        <div class="progress-bar" id="progressBar">
+          <div class="progress-fill" id="progressFill"></div>
+          <div class="progress-thumb" id="progressThumb"></div>
+        </div>
+        <div class="controls-row">
+          <button class="ctrl-btn" id="playPauseBtn" aria-label="Play/Pause">
+            <svg id="playIcon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            <svg id="pauseIcon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+          </button>
+          <div class="volume-wrap">
+            <button class="ctrl-btn" id="muteBtn" aria-label="Mudo">
+              <svg id="volIcon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+            </button>
+            <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.05" value="1">
+          </div>
+          <span class="time-display" id="timeDisplay">0:00 / 0:00</span>
+          <button class="ctrl-btn fullscreen-btn" id="fullscreenBtn" aria-label="Tela cheia">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA abaixo do vídeo -->
+    <div class="video-cta anim" style="animation-delay:.35s">
+      <p>Gostou do que viu? <strong>Fale agora com o Guilherme</strong> e garanta sua vaga.</p>
+      <a href="https://wa.me/5522988432663?text=Olá%20Guilherme!%20Assisti%20a%20apresentação%20e%20quero%20garantir%20minha%20vaga!" class="btn-primary" target="_blank">
+        <svg class="wpp-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        <span>Quero garantir minha vaga</span>
+      </a>
     </div>
   </div>
 </section>
@@ -749,6 +921,64 @@ const obs=new IntersectionObserver(entries=>{
 },{threshold:.1});
 
 document.querySelectorAll('.anim,.feature-card,.testi-card').forEach(el=>obs.observe(el));
+
+/* ── PLAYER DE VÍDEO ── */
+(function(){
+  const video    = document.getElementById('mainVideo');
+  const overlay  = document.getElementById('playOverlay');
+  const playBtn  = document.getElementById('playBtn');
+  const ppBtn    = document.getElementById('playPauseBtn');
+  const playIco  = document.getElementById('playIcon');
+  const pauseIco = document.getElementById('pauseIcon');
+  const muteBtn  = document.getElementById('muteBtn');
+  const volSlider= document.getElementById('volumeSlider');
+  const progress = document.getElementById('progressBar');
+  const fill     = document.getElementById('progressFill');
+  const thumb    = document.getElementById('progressThumb');
+  const timeDisp = document.getElementById('timeDisplay');
+  const fsBtn    = document.getElementById('fullscreenBtn');
+  const wrapper  = video.parentElement;
+
+  if(!video) return;
+
+  function fmt(s){const m=Math.floor(s/60),sec=Math.floor(s%60);return m+':'+(sec<10?'0':'')+sec;}
+
+  function play(){video.play();overlay.classList.add('hidden');wrapper.classList.add('playing');playIco.style.display='none';pauseIco.style.display='';}
+  function pause(){video.pause();playIco.style.display='';pauseIco.style.display='none';}
+
+  overlay.addEventListener('click',play);
+  playBtn.addEventListener('click',play);
+  video.addEventListener('click',()=>video.paused?play():pause());
+  ppBtn.addEventListener('click',()=>video.paused?play():pause());
+
+  video.addEventListener('timeupdate',()=>{
+    if(!video.duration)return;
+    const pct=video.currentTime/video.duration*100;
+    fill.style.width=pct+'%';
+    thumb.style.left=pct+'%';
+    timeDisp.textContent=fmt(video.currentTime)+' / '+fmt(video.duration);
+  });
+
+  video.addEventListener('ended',()=>{
+    overlay.classList.remove('hidden');
+    playIco.style.display='';pauseIco.style.display='none';
+    wrapper.classList.remove('playing');
+    video.currentTime=0;
+  });
+
+  progress.addEventListener('click',e=>{
+    const r=progress.getBoundingClientRect();
+    video.currentTime=(e.clientX-r.left)/r.width*video.duration;
+  });
+
+  volSlider.addEventListener('input',()=>{video.volume=volSlider.value;});
+  muteBtn.addEventListener('click',()=>{video.muted=!video.muted;volSlider.value=video.muted?0:video.volume;});
+
+  fsBtn.addEventListener('click',()=>{
+    if(!document.fullscreenElement)wrapper.requestFullscreen();
+    else document.exitFullscreen();
+  });
+})();
 setTimeout(()=>{
   document.querySelectorAll('[data-count]').forEach(c=>countUp(c,+c.dataset.count,c.dataset.suffix||''));
 },600);
